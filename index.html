@@ -273,10 +273,26 @@ textarea.fi { resize: vertical; min-height: 76px; line-height: 1.55; }
 
 .card-meta-row {
   display: grid;
-  grid-template-columns: auto 80px auto;
+  grid-template-columns: minmax(0, 1fr) auto auto;
   gap: 8px; align-items: flex-end;
   margin-bottom: 14px; margin-top: 10px;
 }
+.jml-stepper { display: flex; align-items: stretch; gap: 4px; }
+.jml-stepper .jmlPilihan {
+  width: 42px; min-width: 0; padding: 8px 2px; text-align: center;
+  appearance: textfield; -moz-appearance: textfield;
+}
+.jml-stepper .jmlPilihan::-webkit-inner-spin-button,
+.jml-stepper .jmlPilihan::-webkit-outer-spin-button { margin: 0; }
+.jml-step-btn {
+  width: 34px; min-width: 34px; padding: 0;
+  border: 1.5px solid var(--border); border-radius: var(--radius-xs);
+  background: var(--surface); color: var(--accent);
+  font-size: 20px; font-weight: 800; line-height: 1;
+  cursor: pointer; font-family: var(--font); transition: .15s;
+}
+.jml-step-btn:hover:not(:disabled) { background: var(--accent-soft); border-color: var(--accent); }
+.jml-step-btn:disabled { color: var(--muted); opacity: .5; cursor: not-allowed; }
 .btn-hapus {
   padding: 10px 12px; border-radius: var(--radius-xs);
   border: 1.5px solid var(--border); background: var(--surface);
@@ -867,6 +883,9 @@ function tambahSoalDariDraft(item) {
 function buatKartu(nomor, item) {
   var container = document.getElementById('soalList');
   var div       = document.createElement('div');
+  var initialJml = parseInt(item.jml, 10);
+  if (isNaN(initialJml)) initialJml = 4;
+  initialJml = Math.max(2, Math.min(12, initialJml));
   div.className = 'soal-card local-saved';
   div.id        = item.id || ('card-' + nomor);
 
@@ -881,8 +900,15 @@ function buatKartu(nomor, item) {
       '</div>' +
       '<div class="field-group">' +
         '<label>Jml Opsi</label>' +
-        '<input type="number" class="fi jmlPilihan" value="' + (item.jml || 4) + '" min="2" max="12"' +
-               ' oninput="handleJmlOpsiChange(this)">' +
+        '<div class="jml-stepper">' +
+          '<button type="button" class="jml-step-btn" aria-label="Kurangi jumlah opsi" title="Kurangi opsi"' +
+                  ' onclick="handleJmlOpsiStep(this, -1)">−</button>' +
+          '<input type="number" class="fi jmlPilihan" value="' + initialJml + '" min="2" max="12" step="1"' +
+                 ' aria-label="Jumlah opsi" onchange="handleJmlOpsiChange(this)"' +
+                 ' oninput="updateJmlOpsiButtons(this)">' +
+          '<button type="button" class="jml-step-btn" aria-label="Tambah jumlah opsi" title="Tambah opsi"' +
+                  ' onclick="handleJmlOpsiStep(this, 1)">+</button>' +
+        '</div>' +
       '</div>' +
       '<button class="btn-hapus" onclick="hapusSoal(\'' + div.id + '\')">✕ Hapus</button>' +
     '</div>' +
@@ -916,7 +942,8 @@ function buatKartu(nomor, item) {
     '</div>';
 
   container.appendChild(div);
-  renderOpsi(div.querySelector('.opsi-wrapper'), item.jml || 4, item.pilihan || [], div.id);
+  renderOpsi(div.querySelector('.opsi-wrapper'), initialJml, item.pilihan || [], div.id);
+  updateJmlOpsiButtons(div.querySelector('.jmlPilihan'));
 }
 
 /* ===== RENDER OPSI ===== */
@@ -1083,12 +1110,44 @@ function restoreImagePreview(card, item) {
   }
 }
 
+function updateJmlOpsiButtons(inputEl) {
+  var jml = parseInt(inputEl.value, 10);
+  var stepper = inputEl.closest('.jml-stepper');
+  if (!stepper) return;
+  var buttons = stepper.querySelectorAll('.jml-step-btn');
+  buttons[0].disabled = jml <= 2;
+  buttons[1].disabled = jml >= 12;
+}
+
+function handleJmlOpsiStep(button, delta) {
+  var inputEl = button.parentElement.querySelector('.jmlPilihan');
+  var current = parseInt(inputEl.value, 10);
+  if (isNaN(current)) current = 4;
+  inputEl.value = Math.max(2, Math.min(12, current + delta));
+  handleJmlOpsiChange(inputEl);
+}
+
 function handleJmlOpsiChange(inputEl) {
-  var jml = parseInt(inputEl.value) || 0;
+  var jml = parseInt(inputEl.value, 10);
+  if (isNaN(jml)) jml = 4;
   if (jml > 12) { toast('warn', 'Maksimal 12 Opsi', ''); jml = 12; inputEl.value = 12; }
   if (jml < 2)  { jml = 2; inputEl.value = 2; }
+  inputEl.value = jml;
   var card = inputEl.closest('.soal-card');
-  renderOpsi(card.querySelector('.opsi-wrapper'), jml, [], card.id);
+  var pilihan = [];
+  var gambarOpsi = {};
+  for (var i = 0; i < LABELS.length; i++) {
+    var label = LABELS[i];
+    var pilihanEl = card.querySelector('.pilihan' + label);
+    if (pilihanEl) pilihan[i] = pilihanEl.value;
+    var fileDesktop = card.querySelector('.opt-file.file' + label);
+    var fileMobile = card.querySelector('.opt-file-mobile.file' + label);
+    var gambar = getCachedB64(fileDesktop) || getCachedB64(fileMobile);
+    if (gambar) gambarOpsi[label] = gambar;
+  }
+  renderOpsi(card.querySelector('.opsi-wrapper'), jml, pilihan, card.id);
+  restoreImagePreview(card, { gambarOpsi: gambarOpsi });
+  updateJmlOpsiButtons(inputEl);
   triggerLocalSave();
 }
 
