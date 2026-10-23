@@ -6,9 +6,6 @@
 <title>Input Soal — Sistem Ujian Digital</title>
 <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;500;600;700;800;900&family=JetBrains+Mono:wght@500&display=swap" rel="stylesheet">
 <style>
-/* ═══════════════════════════════════════════
-   DESIGN TOKENS
-═══════════════════════════════════════════ */
 :root {
   --navy:         #0f1729;
   --accent:       #2563eb;
@@ -50,9 +47,7 @@ body {
 
 .container { max-width: 860px; margin: 0 auto; }
 
-/* ═══════════════════════════════════════════
-   TOAST
-═══════════════════════════════════════════ */
+/* TOAST */
 #toast-container {
   position: fixed; top: 12px; left: 12px; right: 12px;
   z-index: 9999; display: flex; flex-direction: column; gap: 8px; pointer-events: none;
@@ -80,9 +75,7 @@ body {
 .toast-body .t-msg   { font-size: 12px; color: var(--muted); margin-top: 2px; line-height: 1.4; }
 @keyframes toastIn { from { opacity:0; transform:translateY(-12px) scale(.97); } to { opacity:1; transform:none; } }
 
-/* ═══════════════════════════════════════════
-   MODAL
-═══════════════════════════════════════════ */
+/* MODAL */
 #modal-overlay {
   position: fixed; inset: 0; background: rgba(15,23,41,.55);
   display: none; align-items: flex-end; justify-content: center;
@@ -127,9 +120,7 @@ body {
 .modal-btn.ghost  { background: var(--bg); color: var(--text); border: 1.5px solid var(--border); }
 .modal-btn.danger { background: var(--danger); color: #fff; }
 
-/* ═══════════════════════════════════════════
-   PAGE HEADER
-═══════════════════════════════════════════ */
+/* PAGE HEADER */
 .page-header {
   background: var(--surface);
   border-radius: var(--radius);
@@ -156,7 +147,42 @@ body {
 .page-header h1 { font-size: 22px; font-weight: 900; margin-bottom: 3px; }
 .page-header p  { font-size: 13px; color: var(--muted); }
 
-/* PREFIX ROW */
+.autosave-status {
+  margin-top: 12px;
+  padding: 8px 14px;
+  border-radius: var(--radius-sm);
+  font-size: 11px;
+  font-weight: 700;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+}
+.autosave-status.local   { background: var(--success-soft); color: var(--success); }
+.autosave-status.unsaved { background: var(--warn-soft);    color: var(--warn); }
+.autosave-dot { width: 6px; height: 6px; border-radius: 50%; display: inline-block; }
+.autosave-status.local .autosave-dot   { background: var(--success); }
+.autosave-status.unsaved .autosave-dot { background: var(--warn); animation: pulse 1.2s infinite; }
+@keyframes pulse { 0%,100%{opacity:1} 50%{opacity:.25} }
+
+.restore-banner {
+  background: linear-gradient(135deg, #ede9ff, #dbeafe);
+  border: 1.5px solid #c4b5fd;
+  border-radius: var(--radius-sm);
+  padding: 12px 16px;
+  margin-bottom: 14px;
+  display: flex; align-items: center; justify-content: space-between; gap: 10px;
+  flex-wrap: wrap;
+}
+.restore-banner p { font-size: 13px; color: #5b21b6; font-weight: 700; }
+.restore-banner small { font-size: 11px; color: var(--muted); display: block; font-weight: 500; }
+.restore-actions { display: flex; gap: 8px; flex-shrink: 0; }
+.btn-restore {
+  padding: 8px 14px; border-radius: var(--radius-xs); border: none;
+  font-size: 12px; font-weight: 700; cursor: pointer; font-family: var(--font);
+}
+.btn-restore.yes { background: var(--accent); color: #fff; }
+.btn-restore.no  { background: var(--border); color: var(--muted); }
+
 .prefix-row {
   display: flex; align-items: stretch; gap: 0;
   max-width: 340px; margin: 16px auto 0;
@@ -174,9 +200,7 @@ body {
   background: var(--surface); min-width: 0;
 }
 
-/* ═══════════════════════════════════════════
-   MAPEL GLOBAL PANEL
-═══════════════════════════════════════════ */
+/* MAPEL PANEL */
 .mapel-panel {
   background: var(--surface);
   border: 1px solid var(--border);
@@ -197,12 +221,8 @@ body {
   gap: 10px;
 }
 @media (max-width: 480px) { .mapel-grid { grid-template-columns: 1fr; } }
-.mapel-grid .fg-full { grid-column: span 2; }
-@media (max-width: 480px) { .mapel-grid .fg-full { grid-column: span 1; } }
 
-/* ═══════════════════════════════════════════
-   FORM FIELDS
-═══════════════════════════════════════════ */
+/* FORM FIELDS */
 .field-group { display: flex; flex-direction: column; gap: 5px; }
 .field-group label {
   font-size: 10px; font-weight: 800; color: var(--muted);
@@ -218,9 +238,7 @@ body {
 input[type="password"].fi { letter-spacing: .1em; }
 textarea.fi { resize: vertical; min-height: 76px; line-height: 1.55; }
 
-/* ═══════════════════════════════════════════
-   SOAL CARD
-═══════════════════════════════════════════ */
+/* SOAL CARD */
 .soal-card {
   background: var(--surface);
   border-radius: var(--radius);
@@ -232,6 +250,9 @@ textarea.fi { resize: vertical; min-height: 76px; line-height: 1.55; }
   box-shadow: var(--shadow);
   animation: cardIn .3s ease;
 }
+.soal-card.local-saved   { border-top-color: var(--success); }
+.soal-card.local-unsaved { border-top-color: var(--warn); }
+
 @keyframes cardIn { from { opacity:0; transform:translateY(14px); } to { opacity:1; transform:none; } }
 
 .nomor-soal {
@@ -241,6 +262,14 @@ textarea.fi { resize: vertical; min-height: 76px; line-height: 1.55; }
   font-size: 11px; font-weight: 800; letter-spacing: .06em;
   box-shadow: 0 3px 10px rgba(37,99,235,.35);
 }
+
+.card-local-badge {
+  position: absolute; top: 10px; right: 10px;
+  font-size: 10px; font-weight: 800;
+  padding: 3px 10px; border-radius: 99px;
+}
+.card-local-badge.saved   { background: var(--success-soft); color: var(--success); }
+.card-local-badge.unsaved { background: var(--warn-soft);    color: var(--warn); animation: pulse 1.2s infinite; }
 
 .card-meta-row {
   display: grid;
@@ -274,9 +303,7 @@ input[type="file"].fi-file {
   background: var(--surface); color: var(--text); cursor: pointer;
 }
 
-/* ═══════════════════════════════════════════
-   OPTIONS
-═══════════════════════════════════════════ */
+/* OPTIONS */
 .opsi-wrapper { display: flex; flex-direction: column; gap: 7px; margin-bottom: 14px; }
 .option-row {
   display: flex; align-items: center; gap: 8px;
@@ -299,7 +326,6 @@ input[type="file"].fi-file {
 }
 .opt-input:focus { border-color: var(--accent); }
 
-/* Desktop: file input langsung tampil */
 .opt-file { display: none; }
 @media (min-width: 640px) {
   .opt-file {
@@ -309,7 +335,6 @@ input[type="file"].fi-file {
     background: var(--surface); color: var(--text); cursor: pointer; flex-shrink: 0;
   }
 }
-/* Mobile: tombol toggle */
 .opt-img-toggle {
   width: 32px; height: 32px; border-radius: var(--radius-xs);
   border: 1.5px solid var(--border); background: var(--surface);
@@ -325,9 +350,7 @@ input[type="file"].fi-file {
 }
 @media (min-width: 640px) { .opt-img-toggle, .opt-file-mobile { display: none !important; } }
 
-/* ═══════════════════════════════════════════
-   KUNCI JAWABAN
-═══════════════════════════════════════════ */
+/* KUNCI JAWABAN */
 .kunci-row { display: flex; align-items: center; gap: 12px; }
 .kunci-row label {
   font-size: 10px; font-weight: 800; color: var(--muted);
@@ -342,9 +365,7 @@ input[type="file"].fi-file {
 }
 .kunci-input:focus { border-color: var(--accent); box-shadow: 0 0 0 3px rgba(37,99,235,.15); }
 
-/* ═══════════════════════════════════════════
-   ADD BUTTON
-═══════════════════════════════════════════ */
+/* ADD BUTTON */
 .add-btn-wrap { text-align: center; margin: 20px 0; }
 .btn-add {
   padding: 15px 32px; border-radius: 99px;
@@ -358,9 +379,7 @@ input[type="file"].fi-file {
   box-shadow: 0 6px 20px rgba(37,99,235,.35);
 }
 
-/* ═══════════════════════════════════════════
-   STICKY BAR
-═══════════════════════════════════════════ */
+/* STICKY BAR */
 .sticky-bar {
   position: fixed; bottom: 0; left: 0; width: 100%;
   background: var(--surface); border-top: 1px solid var(--border);
@@ -370,10 +389,11 @@ input[type="file"].fi-file {
 .sticky-inner {
   max-width: 860px; margin: 0 auto;
   display: flex; align-items: center; justify-content: space-between; gap: 10px;
+  flex-wrap: wrap;
 }
 .count-info { font-size: 13px; color: var(--muted); flex-shrink: 0; }
 .count-info strong { color: var(--accent); font-size: 22px; font-weight: 900; }
-.bar-actions { display: flex; gap: 8px; flex: 1; justify-content: flex-end; }
+.bar-actions { display: flex; gap: 8px; flex: 1; justify-content: flex-end; flex-wrap: wrap; }
 .btn-preview {
   padding: 11px 16px; border-radius: var(--radius-sm);
   border: 1.5px solid var(--border); background: var(--surface);
@@ -381,6 +401,29 @@ input[type="file"].fi-file {
   white-space: nowrap; font-family: var(--font);
 }
 .btn-preview:hover { border-color: var(--accent); color: var(--accent); }
+.btn-cetak {
+  padding: 11px 16px; border-radius: var(--radius-sm);
+  border: 1.5px solid var(--border); background: var(--surface);
+  font-size: 13px; font-weight: 700; color: var(--text); cursor: pointer; transition: .15s;
+  white-space: nowrap; font-family: var(--font);
+  text-decoration: none; display: inline-flex; align-items: center; gap: 5px;
+}
+.btn-cetak:hover { border-color: #7c3aed; color: #7c3aed; }
+.btn-nilai {
+  padding: 11px 16px; border-radius: var(--radius-sm);
+  border: 1.5px solid var(--border); background: var(--surface);
+  font-size: 13px; font-weight: 700; color: var(--text); cursor: pointer; transition: .15s;
+  white-space: nowrap; font-family: var(--font);
+  text-decoration: none; display: inline-flex; align-items: center; gap: 5px;
+}
+.btn-nilai:hover { border-color: var(--success); color: var(--success); }
+.btn-clear-local {
+  padding: 11px 14px; border-radius: var(--radius-sm);
+  border: 1.5px solid var(--border); background: var(--surface);
+  font-size: 12px; font-weight: 700; color: var(--danger); cursor: pointer; transition: .15s;
+  white-space: nowrap; font-family: var(--font);
+}
+.btn-clear-local:hover { background: var(--danger-soft); border-color: var(--danger); }
 .btn-kirim {
   padding: 11px 20px; border-radius: var(--radius-sm);
   border: none; background: var(--accent);
@@ -397,9 +440,7 @@ input[type="file"].fi-file {
 }
 @keyframes spin { to { transform: rotate(360deg); } }
 
-/* ═══════════════════════════════════════════
-   PREVIEW MODAL CONTENT
-═══════════════════════════════════════════ */
+/* PREVIEW MODAL */
 .pv-item {
   border-bottom: 1px solid var(--border);
   padding-bottom: 18px; margin-bottom: 18px;
@@ -435,8 +476,6 @@ input[type="file"].fi-file {
   background: var(--success-soft); border-radius: 99px; border: 1px solid var(--success);
 }
 .pv-opsi-img { max-height: 70px; border-radius: var(--radius-xs); margin-top: 5px; display: block; border: 1px solid var(--border); }
-
-/* Highlight mapel info di preview */
 .pv-mapel-info {
   background: linear-gradient(135deg,#ede9ff,#dbeafe);
   border: 1px solid #c4b5fd;
@@ -474,29 +513,45 @@ input[type="file"].fi-file {
 
     <div class="prefix-row">
       <span class="prefix-label">Prefix Kode</span>
-      <input type="text" id="baseKode" placeholder="Cth: MTK-9" value="SOAL">
+      <input type="text" id="baseKode" placeholder="Cth: MTK-9" value="SOAL" oninput="triggerLocalSave()">
+    </div>
+
+    <div id="autosaveStatus" class="autosave-status local">
+      <span class="autosave-dot"></span> Tersimpan lokal ✓
+    </div>
+  </div>
+
+  <!-- RESTORE BANNER -->
+  <div id="restoreBanner" class="restore-banner" style="display:none">
+    <div>
+      <p>💾 Ada draft tersimpan di browser ini</p>
+      <small id="restoreInfo">Ditemukan sesi sebelumnya</small>
+    </div>
+    <div class="restore-actions">
+      <button class="btn-restore yes" onclick="restoreFromLocal()">Lanjutkan</button>
+      <button class="btn-restore no"  onclick="discardLocal()">Hapus Draft</button>
     </div>
   </div>
 
   <!-- MAPEL GLOBAL PANEL -->
-  <div class="mapel-panel" id="mapelPanel">
+  <div class="mapel-panel">
     <div class="mapel-panel-title">📚 Informasi Mata Pelajaran (berlaku untuk semua soal)</div>
     <div class="mapel-grid">
       <div class="field-group">
         <label>Kode Mata Pelajaran *</label>
-        <input type="text" class="fi" id="g_kode" placeholder="Cth: MTK-001">
+        <input type="text" class="fi" id="g_kode" placeholder="Cth: MTK-001" oninput="triggerLocalSave()">
       </div>
       <div class="field-group">
         <label>Nama Mata Pelajaran *</label>
-        <input type="text" class="fi" id="g_mapel" placeholder="Cth: Matematika">
+        <input type="text" class="fi" id="g_mapel" placeholder="Cth: Matematika" oninput="triggerLocalSave()">
       </div>
       <div class="field-group">
         <label>Password Mulai *</label>
-        <input type="password" class="fi" id="g_pwd_mulai" placeholder="Kata sandi mulai ujian">
+        <input type="password" class="fi" id="g_pwd_mulai" placeholder="Kata sandi mulai ujian" oninput="triggerLocalSave()">
       </div>
       <div class="field-group">
         <label>Password Selesai *</label>
-        <input type="password" class="fi" id="g_pwd_selesai" placeholder="Kata sandi selesai ujian">
+        <input type="password" class="fi" id="g_pwd_selesai" placeholder="Kata sandi selesai ujian" oninput="triggerLocalSave()">
       </div>
     </div>
   </div>
@@ -517,56 +572,57 @@ input[type="file"].fi-file {
       <strong id="counter">0</strong> soal
     </div>
     <div class="bar-actions">
-      <button class="btn-preview" onclick="showPreviewModal()">👁 Preview</button>
+      <a class="btn-cetak" href="https://castp6980-eng.github.io/penampil_soal_ujian/" target="_blank" rel="noopener noreferrer">🖨 Cetak Soal</a>
+      <a class="btn-nilai" href="https://castp6980-eng.github.io/cek_nilai_semua/" target="_blank" rel="noopener noreferrer">📊 Cek Nilai</a>
+      <button class="btn-preview"     onclick="showPreviewModal()">👁 Preview</button>
+      <button class="btn-clear-local" onclick="confirmClearLocal()">🗑 Bersihkan</button>
       <button class="btn-kirim" id="btnKirim" onclick="kirimSemuaData()">Kirim ke Server →</button>
     </div>
   </div>
 </div>
 
 <script>
-/* ═══════════════════════════════════════════
-   CONFIG — GANTI scriptURL dengan URL GAS Anda
-═══════════════════════════════════════════ */
-const LABELS = ['A','B','C','D','E','F','G','H','I','J','K','L'];
-const scriptURL = 'https://script.google.com/macros/s/AKfycbyaAq-BhmJQ8XCIVRvcloD38oDhGSjW3vzvX43zHTrvegLz9veWuJ9Qkj1V09n4jfw_/exec';
-let soalCount = 0;
+/* ===== CONFIG ===== */
+const LABELS    = ['A','B','C','D','E','F','G','H','I','J','K','L'];
+const scriptURL = 'https://script.google.com/macros/s/AKfycbzKTJSd9C4E4VpYD4Z38MHcIgpL_9c7h2sBdFzUAdu1OoYYfaZfUog0w1UwMCxz16E4/exec';
+const LS_KEY    = 'ujian_draft_v2';
 
-// Load page
+let soalCount        = 0;
+let localSaveTimeout = null;
+
+/* ===== INIT ===== */
 window.addEventListener('DOMContentLoaded', () => {
-  tambahSoal();
+  checkLocalDraft();
 });
 
-/* ═══════════════════════════════════════════
-   TOAST
-═══════════════════════════════════════════ */
-function toast(type, title, msg, duration = 3500) {
-  const icons = { success: '✓', error: '✕', info: 'i', warn: '!' };
+/* ===== TOAST ===== */
+function toast(type, title, msg, duration) {
+  duration = duration || 3500;
+  const icons = { success:'✓', error:'✕', info:'i', warn:'!' };
   const tc = document.getElementById('toast-container');
   const el = document.createElement('div');
   el.className = 'toast';
-  el.innerHTML = `
-    <div class="toast-icon ${type}">${icons[type]||'i'}</div>
-    <div class="toast-body">
-      <div class="t-title">${title}</div>
-      ${msg ? `<div class="t-msg">${msg}</div>` : ''}
-    </div>`;
+  el.innerHTML =
+    '<div class="toast-icon ' + type + '">' + (icons[type] || 'i') + '</div>' +
+    '<div class="toast-body">' +
+      '<div class="t-title">' + title + '</div>' +
+      (msg ? '<div class="t-msg">' + msg + '</div>' : '') +
+    '</div>';
   tc.appendChild(el);
-  setTimeout(() => { el.classList.add('out'); setTimeout(() => el.remove(), 350); }, duration);
+  setTimeout(function() { el.classList.add('out'); setTimeout(function() { el.remove(); }, 350); }, duration);
 }
 
-/* ═══════════════════════════════════════════
-   MODAL
-═══════════════════════════════════════════ */
+/* ===== MODAL ===== */
 function showModal(title, bodyHTML, buttons) {
   document.getElementById('modal-title').textContent = title;
-  document.getElementById('modal-body').innerHTML = bodyHTML;
-  const footer = document.getElementById('modal-footer');
+  document.getElementById('modal-body').innerHTML    = bodyHTML;
+  var footer = document.getElementById('modal-footer');
   footer.innerHTML = '';
-  buttons.forEach(b => {
-    const btn = document.createElement('button');
-    btn.className = `modal-btn ${b.cls || 'ghost'}`;
+  buttons.forEach(function(b) {
+    var btn = document.createElement('button');
+    btn.className   = 'modal-btn ' + (b.cls || 'ghost');
     btn.textContent = b.label;
-    btn.onclick = () => { closeModal(); if (b.action) b.action(); };
+    btn.onclick     = function() { closeModal(); if (b.action) b.action(); };
     footer.appendChild(btn);
   });
   document.getElementById('modal-overlay').classList.add('show');
@@ -576,11 +632,194 @@ function handleOverlayClick(e) {
   if (e.target === document.getElementById('modal-overlay')) closeModal();
 }
 
-/* ═══════════════════════════════════════════
-   TOGGLE GAMBAR OPSI (mobile)
-═══════════════════════════════════════════ */
+/* ===== HELPERS ===== */
+function escHtml(s) {
+  return String(s)
+    .replace(/&/g, '&amp;')
+    .replace(/"/g, '&quot;')
+    .replace(/</g, '&lt;')
+    .replace(/>/g, '&gt;');
+}
+
+function getCachedB64(inputEl) {
+  return (inputEl && inputEl.dataset && inputEl.dataset.b64) ? inputEl.dataset.b64 : '';
+}
+
+/* ===== LOCAL SAVE ===== */
+function setLocalStatus(state, count) {
+  var el = document.getElementById('autosaveStatus');
+  if (state === 'saved') {
+    el.className = 'autosave-status local';
+    el.innerHTML = '<span class="autosave-dot"></span> ' + count + ' soal tersimpan lokal ✓';
+  } else {
+    el.className = 'autosave-status unsaved';
+    el.innerHTML = '<span class="autosave-dot"></span> Ada perubahan belum tersimpan...';
+  }
+}
+
+function collectDraftData() {
+  var draft = {
+    savedAt  : new Date().toISOString(),
+    baseKode : document.getElementById('baseKode').value,
+    global: {
+      kode       : document.getElementById('g_kode').value,
+      mapel      : document.getElementById('g_mapel').value,
+      pwd_mulai  : document.getElementById('g_pwd_mulai').value,
+      pwd_selesai: document.getElementById('g_pwd_selesai').value
+    },
+    soal: []
+  };
+
+  document.querySelectorAll('.soal-card').forEach(function(card) {
+    var jml  = parseInt(card.querySelector('.jmlPilihan').value) || 4;
+    var item = {
+      id         : card.id,
+      kode       : card.querySelector('.kodeSoal').value,
+      soal       : card.querySelector('.soalText').value,
+      kunci      : card.querySelector('.kunci').value,
+      jml        : jml,
+      pilihan    : [],
+      gambarSoal : getCachedB64(card.querySelector('.fileSoal')),
+      gambarOpsi : {}
+    };
+    for (var i = 0; i < jml; i++) {
+      var L  = LABELS[i];
+      var pEl = card.querySelector('.pilihan' + L);
+      item.pilihan.push(pEl ? pEl.value : '');
+      var fD = card.querySelector('.opt-file.file' + L);
+      var fM = card.querySelector('.opt-file-mobile.file' + L);
+      item.gambarOpsi[L] = getCachedB64(fD) || getCachedB64(fM) || '';
+    }
+    draft.soal.push(item);
+  });
+
+  return draft;
+}
+
+function saveToLocal() {
+  try {
+    var draft = collectDraftData();
+    localStorage.setItem(LS_KEY, JSON.stringify(draft));
+    setLocalStatus('saved', draft.soal.length);
+    document.querySelectorAll('.soal-card').forEach(function(card) {
+      card.classList.remove('local-unsaved');
+      card.classList.add('local-saved');
+      var badge = card.querySelector('.card-local-badge');
+      if (badge) { badge.className = 'card-local-badge saved'; badge.textContent = '✓ Draft'; }
+    });
+  } catch(e) {
+    setLocalStatus('unsaved', 0);
+    console.warn('LocalStorage error:', e);
+  }
+}
+
+function triggerLocalSave() {
+  clearTimeout(localSaveTimeout);
+  setLocalStatus('unsaved', 0);
+  document.querySelectorAll('.soal-card').forEach(function(card) {
+    card.classList.add('local-unsaved');
+    card.classList.remove('local-saved');
+    var badge = card.querySelector('.card-local-badge');
+    if (badge) { badge.className = 'card-local-badge unsaved'; badge.textContent = '⏳ Belum disimpan'; }
+  });
+  localSaveTimeout = setTimeout(saveToLocal, 1500);
+}
+
+/* ===== CEK & RESTORE DRAFT ===== */
+function checkLocalDraft() {
+  var raw = localStorage.getItem(LS_KEY);
+  if (!raw) { tambahSoal(); return; }
+
+  try {
+    var draft = JSON.parse(raw);
+    if (!draft.soal || draft.soal.length === 0) {
+      localStorage.removeItem(LS_KEY);
+      tambahSoal();
+      return;
+    }
+    var tanggal = draft.savedAt
+      ? new Date(draft.savedAt).toLocaleString('id-ID', { day:'2-digit', month:'short', hour:'2-digit', minute:'2-digit' })
+      : 'tidak diketahui';
+    document.getElementById('restoreInfo').textContent =
+      draft.soal.length + ' soal · ' + (draft.global && draft.global.mapel ? draft.global.mapel : '—') + ' · ' + tanggal;
+    document.getElementById('restoreBanner').style.display = 'flex';
+  } catch(e) {
+    localStorage.removeItem(LS_KEY);
+    tambahSoal();
+  }
+}
+
+function restoreFromLocal() {
+  document.getElementById('restoreBanner').style.display = 'none';
+  var raw = localStorage.getItem(LS_KEY);
+  if (!raw) { tambahSoal(); return; }
+
+  try {
+    var draft = JSON.parse(raw);
+    clearTimeout(localSaveTimeout);
+
+    document.getElementById('soalList').innerHTML = '';
+    soalCount = 0;
+
+    document.getElementById('baseKode').value      = draft.baseKode                 || '';
+    document.getElementById('g_kode').value        = (draft.global && draft.global.kode)        ? draft.global.kode        : '';
+    document.getElementById('g_mapel').value       = (draft.global && draft.global.mapel)       ? draft.global.mapel       : '';
+    document.getElementById('g_pwd_mulai').value   = (draft.global && draft.global.pwd_mulai)   ? draft.global.pwd_mulai   : '';
+    document.getElementById('g_pwd_selesai').value = (draft.global && draft.global.pwd_selesai) ? draft.global.pwd_selesai : '';
+
+    draft.soal.forEach(function(item) {
+      tambahSoalDariDraft(item);
+      var card = document.getElementById(item.id) || document.querySelector('.soal-card:last-child');
+      if (card) restoreImagePreview(card, item);
+    });
+
+    updateCounter();
+    setLocalStatus('saved', draft.soal.length);
+    document.querySelectorAll('.soal-card').forEach(function(card) {
+      card.classList.remove('local-unsaved');
+      card.classList.add('local-saved');
+      var badge = card.querySelector('.card-local-badge');
+      if (badge) { badge.className = 'card-local-badge saved'; badge.textContent = '✓ Draft'; }
+    });
+
+    toast('success', 'Draft Dipulihkan', draft.soal.length + ' soal siap dilanjutkan.');
+  } catch(e) {
+    toast('error', 'Gagal Memulihkan', 'Format draft tidak valid, memulai baru.');
+    localStorage.removeItem(LS_KEY);
+    tambahSoal();
+  }
+}
+
+function discardLocal() {
+  localStorage.removeItem(LS_KEY);
+  document.getElementById('restoreBanner').style.display = 'none';
+  tambahSoal();
+  toast('info', 'Draft Dihapus', 'Memulai input soal baru.');
+}
+
+function confirmClearLocal() {
+  showModal(
+    'Hapus Semua Data?',
+    '<p style="font-size:14px;color:var(--muted);line-height:1.6">' +
+      'Ini akan menghapus semua soal di layar DAN draft lokal browser.<br>' +
+      '<strong style="color:var(--danger)">Data yang belum dikirim ke server akan hilang.</strong>' +
+    '</p>',
+    [
+      { label: 'Batal', cls: 'ghost' },
+      { label: 'Hapus Semua', cls: 'danger', action: function() {
+        localStorage.removeItem(LS_KEY);
+        document.getElementById('soalList').innerHTML = '';
+        soalCount = 0; updateCounter();
+        tambahSoal();
+        toast('info', 'Data Dibersihkan', 'Semua soal dihapus, siap input baru.');
+      }}
+    ]
+  );
+}
+
+/* ===== TOGGLE GAMBAR OPSI (mobile) ===== */
 function toggleOptFile(btn, fileId) {
-  const fileEl = document.getElementById(fileId);
+  var fileEl = document.getElementById(fileId);
   if (fileEl.style.display === 'block') {
     fileEl.style.display = 'none'; btn.textContent = '📎';
   } else {
@@ -588,125 +827,285 @@ function toggleOptFile(btn, fileId) {
   }
 }
 
-/* ═══════════════════════════════════════════
-   TAMBAH SOAL
-═══════════════════════════════════════════ */
+/* ===== TAMBAH SOAL ===== */
 function tambahSoal() {
   soalCount++;
-  const container = document.getElementById('soalList');
-  const baseKode  = document.getElementById('baseKode').value.trim() || 'SOAL';
+  var container = document.getElementById('soalList');
+  var baseKode  = document.getElementById('baseKode').value.trim() || 'SOAL';
 
-  // Duplikat dari soal terakhir
-  let prev = { jml: 4, soal: '', kunci: '', pilihan: [] };
-  const allCards = container.querySelectorAll('.soal-card');
-  const lastCard = allCards[allCards.length - 1];
+  var prev = { jml: 4, kunci: '', pilihan: [] };
+  var allCards = container.querySelectorAll('.soal-card');
+  var lastCard = allCards[allCards.length - 1];
   if (lastCard) {
     prev.jml   = parseInt(lastCard.querySelector('.jmlPilihan').value) || 4;
-    prev.soal  = '';  // jangan duplikat teks soal
     prev.kunci = lastCard.querySelector('.kunci').value;
-    for (let i = 0; i < prev.jml; i++) {
-      const pEl = lastCard.querySelector(`.pilihan${LABELS[i]}`);
+    for (var i = 0; i < prev.jml; i++) {
+      var pEl = lastCard.querySelector('.pilihan' + LABELS[i]);
       prev.pilihan[i] = pEl ? pEl.value : '';
     }
   }
 
-  const cardId = `card-${soalCount}`;
-  const div = document.createElement('div');
-  div.className = 'soal-card';
-  div.id = cardId;
-
-  div.innerHTML = `
-    <div class="nomor-soal">Soal #${soalCount}</div>
-
-    <div class="card-meta-row">
-      <div class="field-group">
-        <label>Kode Soal</label>
-        <input type="text" class="fi kodeSoal" value="${baseKode}-${soalCount}">
-      </div>
-      <div class="field-group">
-        <label>Jml Opsi</label>
-        <input type="number" class="fi jmlPilihan" value="${prev.jml}" min="2" max="12"
-               oninput="handleJmlOpsiChange(this)">
-      </div>
-      <button class="btn-hapus" onclick="hapusSoal('${cardId}')">✕ Hapus</button>
-    </div>
-
-    <div class="field-group" style="margin-bottom:12px">
-      <label>Teks Soal *</label>
-      <textarea class="fi soalText" rows="3" placeholder="Tuliskan pertanyaan di sini...">${prev.soal}</textarea>
-    </div>
-
-    <div class="file-section">
-      <label>Gambar Soal (opsional — kamera / storage)</label>
-      <input type="file" class="fi-file fileSoal" accept="image/*" capture="environment">
-    </div>
-
-    <div class="opsi-wrapper"></div>
-
-    <div class="kunci-row">
-      <label>Kunci Jawaban</label>
-      <input type="text" class="kunci-input kunci" maxlength="2" placeholder="A" value="${prev.kunci}">
-    </div>
-  `;
-
-  container.appendChild(div);
-  renderOpsi(div.querySelector('.opsi-wrapper'), prev.jml, prev.pilihan, soalCount);
+  buatKartu(soalCount, {
+    id     : 'card-' + soalCount,
+    kode   : baseKode + '-' + soalCount,
+    soal   : '',
+    kunci  : prev.kunci,
+    jml    : prev.jml,
+    pilihan: prev.pilihan
+  });
   updateCounter();
-  setTimeout(() => window.scrollTo({ top: document.body.scrollHeight, behavior: 'smooth' }), 60);
+  triggerLocalSave();
+  setTimeout(function() { window.scrollTo({ top: document.body.scrollHeight, behavior: 'smooth' }); }, 60);
 }
 
-/* ═══════════════════════════════════════════
-   RENDER OPSI
-═══════════════════════════════════════════ */
-function renderOpsi(wrapperEl, jml, savedPilihan = [], cardNum) {
+function tambahSoalDariDraft(item) {
+  soalCount++;
+  buatKartu(soalCount, item);
+}
+
+/* ===== BUAT KARTU ===== */
+function buatKartu(nomor, item) {
+  var container = document.getElementById('soalList');
+  var div       = document.createElement('div');
+  div.className = 'soal-card local-saved';
+  div.id        = item.id || ('card-' + nomor);
+
+  div.innerHTML =
+    '<div class="nomor-soal">Soal #' + nomor + '</div>' +
+    '<div class="card-local-badge saved">✓ Draft</div>' +
+
+    '<div class="card-meta-row">' +
+      '<div class="field-group">' +
+        '<label>Kode Soal</label>' +
+        '<input type="text" class="fi kodeSoal" value="' + escHtml(item.kode || '') + '" oninput="triggerLocalSave()">' +
+      '</div>' +
+      '<div class="field-group">' +
+        '<label>Jml Opsi</label>' +
+        '<input type="number" class="fi jmlPilihan" value="' + (item.jml || 4) + '" min="2" max="12"' +
+               ' oninput="handleJmlOpsiChange(this)">' +
+      '</div>' +
+      '<button class="btn-hapus" onclick="hapusSoal(\'' + div.id + '\')">✕ Hapus</button>' +
+    '</div>' +
+
+    '<div class="field-group" style="margin-bottom:12px">' +
+      '<label>Teks Soal *</label>' +
+      '<textarea class="fi soalText" rows="3" placeholder="Tuliskan pertanyaan di sini..." oninput="triggerLocalSave()">' +
+        escHtml(item.soal || '') +
+      '</textarea>' +
+    '</div>' +
+
+    '<div class="file-section">' +
+      '<label>Gambar Soal (opsional)</label>' +
+      '<input type="file" class="fi-file fileSoal" accept="image/*" capture="environment"' +
+             ' onchange="handleFileSoal(this)">' +
+      '<div class="img-preview-wrap" style="display:none;margin-top:8px">' +
+        '<img class="img-preview-soal" style="max-width:100%;max-height:160px;border-radius:8px;border:1px solid var(--border);display:block">' +
+        '<button type="button" onclick="hapusGambarSoal(this)"' +
+          ' style="margin-top:5px;font-size:11px;color:var(--danger);background:var(--danger-soft);border:1px solid var(--danger);border-radius:6px;padding:3px 10px;cursor:pointer;font-family:var(--font);font-weight:700">' +
+          '✕ Hapus Gambar' +
+        '</button>' +
+      '</div>' +
+    '</div>' +
+
+    '<div class="opsi-wrapper"></div>' +
+
+    '<div class="kunci-row">' +
+      '<label>Kunci Jawaban</label>' +
+      '<input type="text" class="kunci-input kunci" maxlength="2" placeholder="A"' +
+             ' value="' + escHtml(item.kunci || '') + '" oninput="triggerLocalSave()">' +
+    '</div>';
+
+  container.appendChild(div);
+  renderOpsi(div.querySelector('.opsi-wrapper'), item.jml || 4, item.pilihan || [], div.id);
+}
+
+/* ===== RENDER OPSI ===== */
+function renderOpsi(wrapperEl, jml, savedPilihan, cardId) {
   wrapperEl.innerHTML = '';
-  for (let i = 0; i < jml; i++) {
-    const L      = LABELS[i];
-    const fileId = `mfile-${cardNum}-${L}`;
-    const div    = document.createElement('div');
-    div.innerHTML = `
-      <div class="option-row">
-        <div class="opt-label">${L}</div>
-        <input type="text" class="opt-input pilihan${L}"
-               value="${(savedPilihan[i] || '').replace(/"/g,'&quot;')}"
-               placeholder="Pilihan jawaban ${L}">
-        <input type="file" class="opt-file file${L}" accept="image/*">
-        <button type="button" class="opt-img-toggle"
-                onclick="toggleOptFile(this,'${fileId}')" title="Tambah gambar">📎</button>
-        <input type="file" class="opt-file-mobile file${L}" id="${fileId}" accept="image/*" capture="environment">
-      </div>
-    `;
-    wrapperEl.appendChild(div);
+  for (var i = 0; i < jml; i++) {
+    var L      = LABELS[i];
+    var fileId = 'mfile-' + cardId + '-' + L;
+    var wrap   = document.createElement('div');
+
+    wrap.innerHTML =
+      '<div class="option-row">' +
+        '<div class="opt-label">' + L + '</div>' +
+        '<input type="text" class="opt-input pilihan' + L + '"' +
+               ' value="' + escHtml(savedPilihan[i] || '') + '"' +
+               ' placeholder="Pilihan jawaban ' + L + '"' +
+               ' oninput="triggerLocalSave()">' +
+        '<input type="file" class="opt-file file' + L + '" accept="image/*"' +
+               ' onchange="handleFileOpsi(this)">' +
+        '<button type="button" class="opt-img-toggle"' +
+                ' onclick="toggleOptFile(this,\'' + fileId + '\')" title="Tambah gambar">📎</button>' +
+        '<input type="file" class="opt-file-mobile file' + L + '" id="' + fileId + '" accept="image/*" capture="environment"' +
+               ' onchange="handleFileOpsi(this)">' +
+      '</div>';
+
+    wrapperEl.appendChild(wrap);
+  }
+}
+
+/* ===== HANDLER GAMBAR ===== */
+function handleFileSoal(inputEl) {
+  var file = inputEl.files[0];
+  if (!file) return;
+  var reader = new FileReader();
+  reader.onload = function(e) {
+    inputEl.dataset.b64 = e.target.result;
+    var wrap = inputEl.closest('.file-section').querySelector('.img-preview-wrap');
+    var img  = wrap.querySelector('.img-preview-soal');
+    img.src = e.target.result;
+    wrap.style.display = 'block';
+    triggerLocalSave();
+  };
+  reader.readAsDataURL(file);
+}
+
+function hapusGambarSoal(btn) {
+  var section = btn.closest('.file-section');
+  var fileEl  = section.querySelector('.fileSoal');
+  fileEl.value       = '';
+  fileEl.dataset.b64 = '';
+  section.querySelector('.img-preview-wrap').style.display = 'none';
+  triggerLocalSave();
+}
+
+function handleFileOpsi(inputEl) {
+  var file = inputEl.files[0];
+  if (!file) return;
+  var reader = new FileReader();
+  reader.onload = function(e) {
+    inputEl.dataset.b64 = e.target.result;
+
+    var optionRow = inputEl.closest('.option-row');
+    var wrapId    = 'opt-prev-' + inputEl.id;
+    var prev      = document.getElementById(wrapId);
+
+    if (!prev) {
+      prev    = document.createElement('div');
+      prev.id = wrapId;
+      prev.style.cssText = 'margin:4px 0 4px 38px;display:flex;align-items:center;gap:8px';
+
+      var img = document.createElement('img');
+      img.style.cssText = 'max-height:60px;border-radius:6px;border:1px solid var(--border)';
+
+      var delBtn = document.createElement('button');
+      delBtn.type      = 'button';
+      delBtn.dataset.wrapid = wrapId;
+      delBtn.style.cssText  =
+        'font-size:11px;color:var(--danger);background:var(--danger-soft);' +
+        'border:1px solid var(--danger);border-radius:6px;padding:3px 8px;' +
+        'cursor:pointer;font-family:var(--font);font-weight:700';
+      delBtn.textContent = '✕ Hapus';
+      delBtn.onclick = function() { hapusGambarOpsi(this.dataset.wrapid); };
+
+      prev.appendChild(img);
+      prev.appendChild(delBtn);
+      optionRow.insertAdjacentElement('afterend', prev);
+    }
+
+    prev.querySelector('img').src = e.target.result;
+    prev.style.display = 'flex';
+    triggerLocalSave();
+  };
+  reader.readAsDataURL(file);
+}
+
+function hapusGambarOpsi(wrapId) {
+  var prev = document.getElementById(wrapId);
+  if (!prev) return;
+  var sibling = prev.previousElementSibling;
+  if (sibling) {
+    sibling.querySelectorAll('input[type="file"]').forEach(function(el) {
+      el.value = ''; el.dataset.b64 = '';
+    });
+  }
+  prev.style.display = 'none';
+  triggerLocalSave();
+}
+
+function restoreImagePreview(card, item) {
+  if (item.gambarSoal) {
+    var fileEl = card.querySelector('.fileSoal');
+    if (fileEl) {
+      fileEl.dataset.b64 = item.gambarSoal;
+      var wrap = card.querySelector('.img-preview-wrap');
+      var img  = card.querySelector('.img-preview-soal');
+      if (wrap && img) { img.src = item.gambarSoal; wrap.style.display = 'block'; }
+    }
+  }
+
+  if (item.gambarOpsi) {
+    Object.entries(item.gambarOpsi).forEach(function(entry) {
+      var L   = entry[0];
+      var b64 = entry[1];
+      if (!b64) return;
+
+      var fM = card.querySelector('.opt-file-mobile.file' + L);
+      if (!fM) return;
+      fM.dataset.b64 = b64;
+
+      var fD = card.querySelector('.opt-file.file' + L);
+      if (fD) fD.dataset.b64 = b64;
+
+      var wrapId = 'opt-prev-' + fM.id;
+      var prev   = document.getElementById(wrapId);
+
+      if (!prev) {
+        prev    = document.createElement('div');
+        prev.id = wrapId;
+        prev.style.cssText = 'margin:4px 0 4px 38px;display:flex;align-items:center;gap:8px';
+
+        var imgEl = document.createElement('img');
+        imgEl.style.cssText = 'max-height:60px;border-radius:6px;border:1px solid var(--border)';
+
+        var delBtn = document.createElement('button');
+        delBtn.type             = 'button';
+        delBtn.dataset.wrapid   = wrapId;
+        delBtn.style.cssText    =
+          'font-size:11px;color:var(--danger);background:var(--danger-soft);' +
+          'border:1px solid var(--danger);border-radius:6px;padding:3px 8px;' +
+          'cursor:pointer;font-family:var(--font);font-weight:700';
+        delBtn.textContent = '✕ Hapus';
+        delBtn.onclick = function() { hapusGambarOpsi(this.dataset.wrapid); };
+
+        prev.appendChild(imgEl);
+        prev.appendChild(delBtn);
+
+        var optionRow = fM.closest('.option-row');
+        if (optionRow) optionRow.insertAdjacentElement('afterend', prev);
+      }
+
+      prev.querySelector('img').src = b64;
+      prev.style.display = 'flex';
+    });
   }
 }
 
 function handleJmlOpsiChange(inputEl) {
-  let jml = parseInt(inputEl.value) || 0;
-  if (jml > 12) {
-    toast('warn','Maksimal 12 Opsi','Jumlah pilihan tidak boleh melebihi 12.');
-    jml = 12; inputEl.value = 12;
-  }
-  if (jml < 2) { jml = 2; inputEl.value = 2; }
-  const card    = inputEl.closest('.soal-card');
-  const cardNum = card.id.replace('card-','');
-  renderOpsi(card.querySelector('.opsi-wrapper'), jml, [], cardNum);
+  var jml = parseInt(inputEl.value) || 0;
+  if (jml > 12) { toast('warn', 'Maksimal 12 Opsi', ''); jml = 12; inputEl.value = 12; }
+  if (jml < 2)  { jml = 2; inputEl.value = 2; }
+  var card = inputEl.closest('.soal-card');
+  renderOpsi(card.querySelector('.opsi-wrapper'), jml, [], card.id);
+  triggerLocalSave();
 }
 
-/* ═══════════════════════════════════════════
-   HAPUS SOAL
-═══════════════════════════════════════════ */
+/* ===== HAPUS SOAL ===== */
 function hapusSoal(cardId) {
   showModal(
     'Hapus Soal Ini?',
     '<p style="font-size:14px;color:var(--muted);line-height:1.6">Soal yang dihapus tidak dapat dikembalikan. Lanjutkan?</p>',
     [
       { label: 'Batal', cls: 'ghost' },
-      { label: 'Hapus', cls: 'danger', action: () => {
-          document.getElementById(cardId).remove();
-          updateCounter();
-          toast('info','Soal Dihapus','Soal berhasil dihapus dari daftar.');
-        }
-      }
+      { label: 'Hapus', cls: 'danger', action: function() {
+        var el = document.getElementById(cardId);
+        if (el) el.remove();
+        updateCounter();
+        triggerLocalSave();
+        toast('info', 'Soal Dihapus', 'Soal berhasil dihapus.');
+      }}
     ]
   );
 }
@@ -715,97 +1114,101 @@ function updateCounter() {
   document.getElementById('counter').textContent = document.querySelectorAll('.soal-card').length;
 }
 
-/* ═══════════════════════════════════════════
-   PREVIEW
-═══════════════════════════════════════════ */
+/* ===== PREVIEW ===== */
 function showPreviewModal() {
-  const cards = document.querySelectorAll('.soal-card');
-  if (cards.length === 0) {
-    toast('warn','Belum Ada Soal','Tambahkan soal terlebih dahulu.'); return;
-  }
+  var cards = document.querySelectorAll('.soal-card');
+  if (!cards.length) { toast('warn', 'Belum Ada Soal', 'Tambahkan soal terlebih dahulu.'); return; }
 
-  const kode   = document.getElementById('g_kode').value   || '—';
-  const mapel  = document.getElementById('g_mapel').value  || '—';
-  const pwdMul = document.getElementById('g_pwd_mulai').value  ? '✓ Diisi' : '✗ Kosong';
-  const pwdSel = document.getElementById('g_pwd_selesai').value ? '✓ Diisi' : '✗ Kosong';
+  var kode   = document.getElementById('g_kode').value   || '—';
+  var mapel  = document.getElementById('g_mapel').value  || '—';
+  var pwdMul = document.getElementById('g_pwd_mulai').value   ? '✓ Diisi' : '✗ Kosong';
+  var pwdSel = document.getElementById('g_pwd_selesai').value ? '✓ Diisi' : '✗ Kosong';
 
-  let bodyHTML = `
-    <div class="pv-mapel-info">
-      <strong>Kode:</strong> ${kode} &nbsp;|&nbsp;
-      <strong>Mapel:</strong> ${mapel}<br>
-      <strong>Password Mulai:</strong> ${pwdMul} &nbsp;|&nbsp;
-      <strong>Password Selesai:</strong> ${pwdSel}
-    </div>`;
+  var bodyHTML =
+    '<div class="pv-mapel-info">' +
+      '<strong>Kode:</strong> ' + kode + ' &nbsp;|&nbsp; ' +
+      '<strong>Mapel:</strong> ' + mapel + '<br>' +
+      '<strong>Password Mulai:</strong> ' + pwdMul + ' &nbsp;|&nbsp; ' +
+      '<strong>Password Selesai:</strong> ' + pwdSel +
+    '</div>';
 
-  cards.forEach((card, idx) => {
-    const kode2    = card.querySelector('.kodeSoal').value || 'TANPA KODE';
-    const soalText = card.querySelector('.soalText').value || '(Soal kosong)';
-    const jml      = parseInt(card.querySelector('.jmlPilihan').value);
-    const kunci    = card.querySelector('.kunci').value.toUpperCase();
-    const fileSoal = card.querySelector('.fileSoal').files[0];
+  cards.forEach(function(card, idx) {
+    var kode2    = card.querySelector('.kodeSoal').value || 'TANPA KODE';
+    var soalText = card.querySelector('.soalText').value || '(Soal kosong)';
+    var jml      = parseInt(card.querySelector('.jmlPilihan').value);
+    var kunci    = card.querySelector('.kunci').value.toUpperCase();
+    var fileSoal = card.querySelector('.fileSoal').files[0];
+    var soalB64  = getCachedB64(card.querySelector('.fileSoal'));
 
-    bodyHTML += `<div class="pv-item">
-      <div class="pv-top">
-        <span class="pv-num">Soal #${idx + 1}</span>
-        <span class="pv-kode">${kode2}</span>
-      </div>
-      <div class="pv-soal">${soalText.replace(/\n/g,'<br>')}</div>`;
+    bodyHTML +=
+      '<div class="pv-item">' +
+        '<div class="pv-top">' +
+          '<span class="pv-num">Soal #' + (idx + 1) + '</span>' +
+          '<span class="pv-kode">' + kode2 + '</span>' +
+        '</div>' +
+        '<div class="pv-soal">' + soalText.replace(/\n/g, '<br>') + '</div>';
 
-    if (fileSoal) {
-      bodyHTML += `<img src="${URL.createObjectURL(fileSoal)}" class="pv-img">`;
+    if (soalB64) {
+      bodyHTML += '<img src="' + soalB64 + '" class="pv-img">';
+    } else if (fileSoal) {
+      bodyHTML += '<img src="' + URL.createObjectURL(fileSoal) + '" class="pv-img">';
     }
 
-    bodyHTML += `<div class="pv-opsi-list">`;
-    for (let i = 0; i < jml; i++) {
-      const L      = LABELS[i];
-      const txt    = card.querySelector(`.pilihan${L}`)?.value || '(Kosong)';
-      const fDes   = card.querySelector(`.opt-file.file${L}`)?.files[0];
-      const fMob   = card.querySelector(`.opt-file-mobile.file${L}`)?.files[0];
-      const fOpsi  = fDes || fMob;
-      const isK    = L === kunci;
+    bodyHTML += '<div class="pv-opsi-list">';
+    for (var i = 0; i < jml; i++) {
+      var L     = LABELS[i];
+      var txt   = (card.querySelector('.pilihan' + L) && card.querySelector('.pilihan' + L).value) || '(Kosong)';
+      var fD    = card.querySelector('.opt-file.file' + L);
+      var fM    = card.querySelector('.opt-file-mobile.file' + L);
+      var opsiB64 = getCachedB64(fD) || getCachedB64(fM) || '';
+      var isK   = L === kunci;
 
-      bodyHTML += `<div class="pv-opsi${isK ? ' kunci' : ''}">
-        <div class="pv-key">${L}</div>
-        <div>
-          <div class="pv-opsi-text">${txt}${isK ? '<span class="pv-kunci-badge">KUNCI</span>' : ''}</div>
-          ${fOpsi ? `<img src="${URL.createObjectURL(fOpsi)}" class="pv-opsi-img">` : ''}
-        </div>
-      </div>`;
+      bodyHTML +=
+        '<div class="pv-opsi' + (isK ? ' kunci' : '') + '">' +
+          '<div class="pv-key">' + L + '</div>' +
+          '<div>' +
+            '<div class="pv-opsi-text">' + txt + (isK ? '<span class="pv-kunci-badge">KUNCI</span>' : '') + '</div>' +
+            (opsiB64 ? '<img src="' + opsiB64 + '" class="pv-opsi-img">' : '') +
+          '</div>' +
+        '</div>';
     }
-    bodyHTML += `</div></div>`;
+    bodyHTML += '</div></div>';
   });
 
-  showModal(`Preview (${cards.length} soal)`, bodyHTML, [{ label: 'Tutup', cls: 'ghost' }]);
+  showModal('Preview (' + cards.length + ' soal)', bodyHTML, [{ label: 'Tutup', cls: 'ghost' }]);
 }
 
-/* ═══════════════════════════════════════════
-   KIRIM DATA
-═══════════════════════════════════════════ */
-const toBase64 = file => new Promise(resolve => {
-  if (!file) resolve(null);
-  else { const r = new FileReader(); r.readAsDataURL(file); r.onload = () => resolve(r.result); }
-});
+/* ===== KIRIM KE SERVER ===== */
+var toBase64 = function(file) {
+  return new Promise(function(resolve) {
+    if (!file) { resolve(null); return; }
+    var r = new FileReader();
+    r.readAsDataURL(file);
+    r.onload = function() { resolve(r.result); };
+  });
+};
 
 function validateGlobal() {
-  if (!document.getElementById('g_kode').value.trim())       { toast('error','Kode Mata Pelajaran kosong','Isi di panel informasi mata pelajaran.'); return false; }
-  if (!document.getElementById('g_mapel').value.trim())      { toast('error','Nama Mata Pelajaran kosong','Isi di panel informasi mata pelajaran.'); return false; }
-  if (!document.getElementById('g_pwd_mulai').value.trim())  { toast('error','Password Mulai kosong','Isi di panel informasi mata pelajaran.'); return false; }
-  if (!document.getElementById('g_pwd_selesai').value.trim()){ toast('error','Password Selesai kosong','Isi di panel informasi mata pelajaran.'); return false; }
+  if (!document.getElementById('g_kode').value.trim())        { toast('error', 'Kode Mata Pelajaran kosong', 'Isi di panel informasi mata pelajaran.'); return false; }
+  if (!document.getElementById('g_mapel').value.trim())       { toast('error', 'Nama Mata Pelajaran kosong', 'Isi di panel informasi mata pelajaran.'); return false; }
+  if (!document.getElementById('g_pwd_mulai').value.trim())   { toast('error', 'Password Mulai kosong', 'Isi di panel informasi mata pelajaran.'); return false; }
+  if (!document.getElementById('g_pwd_selesai').value.trim()) { toast('error', 'Password Selesai kosong', 'Isi di panel informasi mata pelajaran.'); return false; }
   return true;
 }
 
-async function kirimSemuaData() {
-  const cards = document.querySelectorAll('.soal-card');
-  if (cards.length === 0) { toast('warn','Belum Ada Soal','Tambahkan soal terlebih dahulu.'); return; }
+function kirimSemuaData() {
+  var cards = document.querySelectorAll('.soal-card');
+  if (!cards.length) { toast('warn', 'Belum Ada Soal', 'Tambahkan soal terlebih dahulu.'); return; }
   if (!validateGlobal()) return;
 
   showModal(
     'Kirim ke Server?',
-    `<p style="font-size:14px;color:var(--muted);line-height:1.6">
-      Akan mengirim <strong style="color:var(--accent)">${cards.length} soal</strong>
-      mata pelajaran <strong style="color:var(--text)">${document.getElementById('g_mapel').value}</strong>
-      ke server. Pastikan semua soal sudah benar.
-    </p>`,
+    '<p style="font-size:14px;color:var(--muted);line-height:1.6">' +
+      'Akan mengirim <strong style="color:var(--accent)">' + cards.length + ' soal</strong> ' +
+      'mata pelajaran <strong style="color:var(--text)">' + document.getElementById('g_mapel').value + '</strong> ' +
+      'ke server.<br><br>' +
+      '<span style="color:var(--success);font-weight:700">✓ Setiap soal hanya akan dikirim SATU KALI — tidak ada duplikasi.</span>' +
+    '</p>',
     [
       { label: 'Batal', cls: 'ghost' },
       { label: 'Ya, Kirim', cls: 'primary', action: prosesKirim }
@@ -814,66 +1217,61 @@ async function kirimSemuaData() {
 }
 
 async function prosesKirim() {
-  const cards  = document.querySelectorAll('.soal-card');
-  const btn    = document.getElementById('btnKirim');
+  var cards   = document.querySelectorAll('.soal-card');
+  var btn     = document.getElementById('btnKirim');
   btn.disabled = true;
-  btn.innerHTML = `<div class="spinner"></div> Mengirim...`;
+  btn.innerHTML = '<div class="spinner"></div> Mengirim...';
 
-  toast('info','Memproses Data','Sedang mengompres gambar dan mengirim soal...');
+  toast('info', 'Memproses Data', 'Sedang mengompres gambar dan mengirim soal...');
 
-  // Ambil data global
-  const kodeMapel  = document.getElementById('g_kode').value.trim();
-  const namaMapel  = document.getElementById('g_mapel').value.trim();
-  const pwdMulai   = document.getElementById('g_pwd_mulai').value.trim();
-  const pwdSelesai = document.getElementById('g_pwd_selesai').value.trim();
+  var kodeMapel  = document.getElementById('g_kode').value.trim();
+  var namaMapel  = document.getElementById('g_mapel').value.trim();
+  var pwdMulai   = document.getElementById('g_pwd_mulai').value.trim();
+  var pwdSelesai = document.getElementById('g_pwd_selesai').value.trim();
 
-  let bundleData = [];
+  var berhasil = 0;
+  var gagal    = 0;
 
-  for (let card of cards) {
-    const jml  = parseInt(card.querySelector('.jmlPilihan').value) || 4;
-    const obj  = {
+  for (var ci = 0; ci < cards.length; ci++) {
+    var card = cards[ci];
+    var jml  = parseInt(card.querySelector('.jmlPilihan').value) || 4;
+    var fileSoalEl = card.querySelector('.fileSoal');
+
+    var obj = {
       action: 'inputSoal',
       data: {
         'kode mata pelajaran': kodeMapel,
-        'mata pelajaran':      namaMapel,
-        'pasword mulai':       pwdMulai,
-        'pasword selesai':     pwdSelesai,
-        'kode soal':           card.querySelector('.kodeSoal').value.trim(),
-        'soal':                card.querySelector('.soalText').value.trim(),
-        'gambar soal':         await toBase64(card.querySelector('.fileSoal').files[0]) || '',
-        'kunci jawaban':       card.querySelector('.kunci').value.trim().toUpperCase(),
+        'mata pelajaran'     : namaMapel,
+        'pasword mulai'      : pwdMulai,
+        'pasword selesai'    : pwdSelesai,
+        'kode soal'          : card.querySelector('.kodeSoal').value.trim(),
+        'soal'               : card.querySelector('.soalText').value.trim(),
+        'gambar soal'        : getCachedB64(fileSoalEl) || (await toBase64(fileSoalEl && fileSoalEl.files[0])) || '',
+        'kunci jawaban'      : card.querySelector('.kunci').value.trim().toUpperCase()
       }
     };
 
-    // Opsi A–L
-    for (let i = 0; i < 12; i++) {
-      const L  = LABELS[i];
-      const fD = card.querySelector(`.opt-file.file${L}`)?.files[0];
-      const fM = card.querySelector(`.opt-file-mobile.file${L}`)?.files[0];
+    for (var i = 0; i < 12; i++) {
+      var L  = LABELS[i];
+      var fD = card.querySelector('.opt-file.file' + L);
+      var fM = card.querySelector('.opt-file-mobile.file' + L);
       if (i < jml) {
-        obj.data[`opt_${L}`]       = card.querySelector(`.pilihan${L}`)?.value || '';
-        obj.data[`gambar opt_${L}`] = await toBase64(fD || fM) || '';
+        var pEl = card.querySelector('.pilihan' + L);
+        obj.data['opt_' + L]        = pEl ? pEl.value : '';
+        obj.data['gambar opt_' + L] = getCachedB64(fD) || getCachedB64(fM) || '';
       } else {
-        obj.data[`opt_${L}`]       = '';
-        obj.data[`gambar opt_${L}`] = '';
+        obj.data['opt_' + L]        = '';
+        obj.data['gambar opt_' + L] = '';
       }
     }
 
-    bundleData.push(obj);
-  }
-
-  // Kirim satu per satu (POST per soal)
-  let berhasil = 0;
-  let gagal    = 0;
-
-  for (let payload of bundleData) {
     try {
       await fetch(scriptURL, {
-        method: 'POST',
-        mode: 'no-cors',
-        cache: 'no-cache',
+        method : 'POST',
+        mode   : 'no-cors',
+        cache  : 'no-cache',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(payload)
+        body   : JSON.stringify(obj)
       });
       berhasil++;
     } catch(e) {
@@ -881,23 +1279,25 @@ async function prosesKirim() {
     }
   }
 
-  btn.disabled = false;
+  btn.disabled  = false;
   btn.innerHTML = 'Kirim ke Server →';
 
   if (gagal === 0) {
+    localStorage.removeItem(LS_KEY);
     showModal(
       '🎉 Berhasil Dikirim!',
-      `<div style="text-align:center;padding:10px 0">
-        <div style="font-size:48px;margin-bottom:12px">🎉</div>
-        <p style="font-size:14px;color:var(--muted);line-height:1.7">
-          <strong style="color:var(--text)">${berhasil} soal</strong> berhasil dikirim ke Google Sheets.<br>
-          Silakan cek sheet <strong>soal</strong> pada spreadsheet Anda.
-        </p>
-      </div>`,
-      [{ label: 'Input Soal Baru', cls: 'primary', action: () => location.reload() }]
+      '<div style="text-align:center;padding:10px 0">' +
+        '<div style="font-size:48px;margin-bottom:12px">🎉</div>' +
+        '<p style="font-size:14px;color:var(--muted);line-height:1.7">' +
+          '<strong style="color:var(--text)">' + berhasil + ' soal</strong> berhasil dikirim ke Google Sheets.<br>' +
+          'Draft lokal telah dibersihkan.<br>' +
+          'Silakan cek sheet <strong>soal</strong> pada spreadsheet Anda.' +
+        '</p>' +
+      '</div>',
+      [{ label: 'Input Soal Baru', cls: 'primary', action: function() { location.reload(); } }]
     );
   } else {
-    toast('error','Sebagian Gagal',`${berhasil} soal berhasil, ${gagal} soal gagal dikirim.`);
+    toast('error', 'Sebagian Gagal', berhasil + ' soal berhasil, ' + gagal + ' soal gagal dikirim.');
   }
 }
 </script>
